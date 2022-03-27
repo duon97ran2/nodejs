@@ -26,17 +26,28 @@ import cors from "cors";
 import productRoute from "./routes/product.js";
 import morgan from "morgan";
 import mongoose from "mongoose";
+import { readdirSync } from "fs";
+import path, { dirname } from "path";
+import categoryRoute from "./routes/categories"
+import authRouter from "./routes/auth"
+import userRouter from "./routes/user"
+import dotenv from "dotenv";
+dotenv.config();
+
 
 const app = express();
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
 
-app.use("/api",productRoute);
+app.use("/api", productRoute);
+app.use("/api", categoryRoute);
+app.use("/api", userRouter);
+app.use("/api", authRouter);
 
-mongoose.connect("mongodb://0.0.0.0:27017/we16310").then(()=>console.log("connect successfully")).catch(errors=>console.log(errors));
+mongoose.connect(process.env.MONGODB_LOCAL).then(() => console.log("connect successfully")).catch(errors => console.log(errors));
 
 
-app.listen(4000,()=>
-  console.log("Server is running",4000)
+app.listen(4000, () =>
+  console.log("Server is running", 4000)
 );
