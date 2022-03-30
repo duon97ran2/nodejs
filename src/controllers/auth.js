@@ -7,7 +7,7 @@ export const login = async (req, res) => {
     if (user.authenticate(req.body.password)) {
       return res.json({
         message: "Login success",
-        data: {
+        userData: {
           token: generateToken({ id: user._id }),
           user: {
             _id: user._id,

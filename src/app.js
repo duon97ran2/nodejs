@@ -28,17 +28,21 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import { readdirSync } from "fs";
 import path, { dirname } from "path";
-import categoryRoute from "./routes/categories"
-import authRouter from "./routes/auth"
-import userRouter from "./routes/user"
+import categoryRoute from "./routes/categories";
+import authRouter from "./routes/auth";
+import userRouter from "./routes/user";
 import dotenv from "dotenv";
+import swaggerUI from "swagger-ui-express";
+import YAML from "yamljs";
 dotenv.config();
 
 
 const app = express();
+const swaggerJSDOcs = YAML.load("./api.yaml");
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSDOcs));
 
 app.use("/api", productRoute);
 app.use("/api", categoryRoute);

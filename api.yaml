@@ -1,0 +1,50 @@
+swagger: "2.0"
+info:
+  description : API description
+  version: 1.0.1
+  title: "API demo"
+paths:
+  /api/products:
+    get:
+      summary: Get product list
+      responses: 
+       "200":
+          description: Get prouducts success
+       "400":
+          description: Get prouducts failed
+    post: 
+      summary: Add product to product list
+      responses:
+        "200":
+          decription: Add product success
+        "400":
+          decription: Add product failed
+      parameters: 
+      - in: "body"
+        name: "body"
+        description : "Product data that needs to be add to list"
+        required: true
+        schema: 
+          $ref: "#/components/schemas/Product"
+    put:
+      summary: Update product in product list
+     
+
+#model
+components:
+  schemas: 
+    Product: 
+      properties:
+        _id:
+          type: string
+        name: 
+          type: string
+          minLength: 5
+        price:
+          type: integer
+        category: 
+          type: string
+      required:
+        - name
+        - price
+        - category

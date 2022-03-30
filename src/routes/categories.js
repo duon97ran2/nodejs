@@ -10,4 +10,4 @@ router.get("/category/:id", checkAuth, getOne);
 router.delete("/category/:id", checkAuth, remove);
 router.put("/category/:id", checkAuth, update);
 
-module.exports = router;
+export default router;

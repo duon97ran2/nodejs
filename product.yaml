@@ -1,0 +1,11 @@
+components:
+  schemas:
+    Product:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: integer
+     

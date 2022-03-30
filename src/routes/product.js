@@ -14,4 +14,4 @@ router.put("/products/:id", checkAuth, update);
 router.post("/products", create);
 
 router.param("userId", getUserById)
-module.exports = router;
+export default router;
