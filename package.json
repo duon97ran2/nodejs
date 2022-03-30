@@ -5,9 +5,6 @@
   "repository": "https://github.com/duon97ran2/nodejs.git",
   "author": "duon97ran2 <duongtaph13276@fpt.edu.vn>",
   "license": "MIT",
-  "engines": {
-    "node": "14.x"
-  },
   "scripts": {
     "start": "node --exec babel-node ./src/app.js -e js",
     "dev": "nodemon --exec babel-node ./src/app.js -e js"
