@@ -49,7 +49,7 @@ app.use("/api", categoryRoute);
 app.use("/api", userRouter);
 app.use("/api", authRouter);
 
-mongoose.connect(process.env.MONGODB_ONLINE).then(() => console.log("connect successfully")).catch(errors => console.log(errors));
+mongoose.connect(process.env.MONGODB_LOCAL).then(() => console.log("connect successfully")).catch(errors => console.log(errors));
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () =>

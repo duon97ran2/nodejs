@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 const categorySchema = new Schema({
   name: {
-    type: String,
+    type: string,
     required: true,
   }
 }, { timestamps: true });

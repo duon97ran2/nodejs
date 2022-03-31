@@ -4,23 +4,23 @@ import { v4 as uuidv4 } from "uuid"
 
 const userSchema = new Schema({
   email: {
-    type: String,
+    type: string,
     required: true,
     trim: true,
     unique: true,
   },
   username: {
-    type: String,
+    type: string,
     required: true,
   },
   password: {
-    type: String,
+    type: string,
     required: true,
     minlength: 5,
   }, salt: {
-    type: String,
+    type: string,
   }, role: {
-    type: Number,
+    type: number,
     default: 0
   }
 }, { timestamps: true });
