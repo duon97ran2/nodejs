@@ -1,29 +1,29 @@
-import mongoose, { Schema, ObjectId } from "mongoose";
-const productSchema = new Schema({
+import mongoose from "mongoose";
+const productSchema = mongoose.Schema({
   name: {
-    type: string,
+    type: String,
     minLength: 5,
     required: true,
     unique: true
   },
   image: {
-    type: string,
+    type: String,
     default: "https://m.media-amazon.com/images/I/712yjQksyHL._AC_SY450_.jpg"
   },
   price: {
-    type: number,
+    type: Number,
     required: true,
   },
   category: {
-    type: ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Category"
   },
   description: {
-    type: string,
+    type: String,
     default: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus adipisci facilis cumque expedita fugit voluptatum nam deleniti est consequatur et."
   },
   discount: {
-    type: number,
+    type: Number,
     default: 0
   }
 }, { timestamps: true });
