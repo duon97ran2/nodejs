@@ -6,8 +6,13 @@ const productSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  image: {
+  slug: {
     type: String,
+    required: true,
+    unique: true,
+  },
+  image: {
+    type: Array,
     default: "https://m.media-amazon.com/images/I/712yjQksyHL._AC_SY450_.jpg"
   },
   price: {
@@ -16,7 +21,12 @@ const productSchema = mongoose.Schema({
   },
   category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Category"
+    ref: "Category",
+    required: true,
+  },
+  stock: {
+    type: Number,
+    required: true,
   },
   description: {
     type: String,
@@ -25,6 +35,20 @@ const productSchema = mongoose.Schema({
   discount: {
     type: Number,
     default: 0
+  },
+  view: {
+    type: Number,
+    default: 0
+  },
+  featured: {
+    type: Boolean,
+    default: false
+  },
+  switch: {
+    type: Array,
+  },
+  color: {
+    type: Array,
   }
 }, { timestamps: true });
 
