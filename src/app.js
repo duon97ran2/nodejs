@@ -38,7 +38,7 @@ dotenv.config();
 
 
 const app = express();
-const swaggerJSDOcs = YAML.load("./api.yaml");
+const swaggerJSDOcs = YAML.load("api.yaml");
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
