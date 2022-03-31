@@ -1,13 +1,14 @@
 import { Router } from "express";
 import { create, getOne, list, remove, update } from "../controllers/categories";
-import { checkAuth } from "../middlewares/checkAuth";
+import { isAdmin, isAuth, isExist } from "../middlewares/Authenticate";
+
 
 const router = Router();
 
-router.post("/category", checkAuth, create);
-router.get("/category", checkAuth, list);
-router.get("/category/:id", checkAuth, getOne);
-router.delete("/category/:id", checkAuth, remove);
-router.put("/category/:id", checkAuth, update);
+router.post("/category", isAuth, isExist, isAdmin, create);
+router.get("/category", isAuth, isExist, isAdmin, list);
+router.get("/category/:id", isAuth, isExist, isAdmin, getOne);
+router.delete("/category/:id", isAuth, isExist, isAdmin, remove);
+router.put("/category/:id", isAuth, isExist, isAdmin, update);
 
 export default router;

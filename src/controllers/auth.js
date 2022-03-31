@@ -8,7 +8,7 @@ export const login = async (req, res) => {
       user.password = null;
       return res.json({
         message: "Login success",
-        token: generateToken({ id: user._id }),
+        token: generateToken({ id: user._id }, { expiresIn: "1d" }),
         user
       });
     }

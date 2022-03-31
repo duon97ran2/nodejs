@@ -1,17 +1,16 @@
 import { Router } from "express";
 import { create, getOne, list, remove, update } from "../controllers/product.js";
-import { getUserById } from "../controllers/user.js";
-import { checkAuth, isAdmin, isAuth, requiredSignin } from "../middlewares/checkAuth.js";
+import { isAdmin, isAuth, isExist } from "../middlewares/Authenticate";
+
 
 
 const router = Router();
 
 
-router.get("/products", checkAuth, list);
-router.get("/products/:id", checkAuth, getOne);
-router.delete("/products/:id", checkAuth, remove);
-router.put("/products/:id", checkAuth, update);
-router.post("/products", create);
+router.get("/products", list);
+router.get("/products/:id", getOne);
+router.delete("/products/:id", isAuth, isExist, isAdmin, remove);
+router.put("/products/:id", isAuth, isExist, isAdmin, update);
+router.post("/products", isAuth, isExist, isAdmin, create);
 
-router.param("userId", getUserById)
 export default router;
