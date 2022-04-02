@@ -18,10 +18,10 @@ const app = express();
 const swaggerJSDOcs = YAML.load(__dirname + "/configs/api.yaml");
 app.use(morgan('tiny'));
 app.use(express.json());
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSDOcs));
 
 app.use(cors());
 
+app.use("/api/swaggers", swaggerUI.serve, swaggerUI.setup(swaggerJSDOcs));
 app.use("/api", productRoute);
 app.use("/api", categoryRoute);
 app.use("/api", userRouter);
