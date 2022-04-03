@@ -12,8 +12,8 @@ const productSchema = mongoose.Schema({
     unique: true,
   },
   image: {
-    type: Object,
-    default: "https://m.media-amazon.com/images/I/712yjQksyHL._AC_SY450_.jpg"
+    type: Array,
+    default: [{ url: "https://m.media-amazon.com/images/I/712yjQksyHL._AC_SY450_.jpg" }]
   },
   price: {
     type: Number,
