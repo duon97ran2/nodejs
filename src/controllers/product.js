@@ -6,7 +6,7 @@ export const list = async (req, res) => {
     res.json(products);
   } catch (error) {
     res.status(400).json({
-      error: "No product found"
+      message: error.message,
     })
   }
 };
@@ -27,7 +27,7 @@ export const getOne = async (req, res) => {
     res.json(products);
   } catch (error) {
     res.status(400).json({
-      error: "Không có sản phẩm"
+      message: error.message,
     })
   }
 };
@@ -37,7 +37,7 @@ export const remove = async (req, res) => {
     res.status(200).json(product);
   } catch (error) {
     res.status(400).json({
-      error: "Delete product failed"
+      message: error.message,
     })
   }
 };
@@ -45,11 +45,11 @@ export const update = async (req, res) => {
   const condition = { _id: req.params.id };
   const update = req.body;
   try {
-    const product = await Product.findOneAndUpdate(condition, update).populate("category").exec();
+    const product = await Product.findOneAndUpdate(condition, update, { new: true }).populate("category").exec();
     res.json(product);
   } catch (error) {
     res.status(400).json({
-      error: "Update product failed",
+      message: error.message,
     })
   }
 };
