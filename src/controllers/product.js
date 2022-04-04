@@ -1,3 +1,4 @@
+import product from "../models/product";
 import Product from "../models/product";
 
 export const list = async (req, res) => {
@@ -53,3 +54,22 @@ export const update = async (req, res) => {
     })
   }
 };
+export const ProductSearchByName = async (req, res) => {
+  try {
+    var q = req.query.q;
+    const data = await Product.find({
+      name: {
+        $regex: new RegExp(q)
+      }
+
+    }, {
+      _id: 0,
+      __v: 0
+    }).limit(10);
+    res.json(data);
+  } catch (error) {
+    res.json({ message: error.message });
+  }
+
+
+}
