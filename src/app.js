@@ -17,7 +17,7 @@ dotenv.config({ path: __dirname + "/configs/.env" });
 const app = express();
 const swaggerJSDOcs = YAML.load(__dirname + "/configs/api.yaml");
 app.use(morgan('tiny'));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 const corsOptions = {
   origin: 'http://localhost:3000',
