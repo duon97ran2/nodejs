@@ -7,7 +7,7 @@ export const list = async (req, res) => {
     const user = await User.find({}).exec();
     res.json(user);
   } catch (error) {
-    res.json({ error: "Cant load user list" })
+    res.json({ message: error.message })
   }
 }
 export const remove = async (req, res) => {
@@ -15,7 +15,7 @@ export const remove = async (req, res) => {
     const user = await User.findOneAndDelete({ _id: req.params.id }).exec();
     res.json(user);
   } catch (error) {
-    res.json({ error: "Cant find user" })
+    res.json({ message: error.message })
   }
 }
 export const getUserById = async (req, res,) => {
@@ -27,14 +27,14 @@ export const getUserById = async (req, res,) => {
     user.password = null;
     return res.json(user);
   } catch (error) {
-    console.log(error);
+    res.status(400).send({ message: error.message })
   }
 };
 export const updateUser = async (req, res) => {
   try {
-    if (req.body.password) {
-      req.body.password = crypto.createHash('sha256').update(req.body.password).digest('hex');
-    }
+    // if (req.body.password) {
+    //   req.body.password = crypto.createHash('sha256').update(req.body.password).digest('hex');
+    // }
     const user = await User.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }).exec();
     res.status(200).json(user);
   } catch (error) {

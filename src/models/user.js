@@ -22,6 +22,9 @@ const userSchema = new Schema({
   }, role: {
     type: Number,
     default: 0
+  },
+  avatar: {
+    type: Array,
   }
 }, { timestamps: true });
 userSchema.methods = {
