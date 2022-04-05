@@ -7,7 +7,7 @@ export const create = async (req, res) => {
     res.json(category);
   } catch (error) {
     res.status(400).json({
-      error: "Cant create category"
+      message: error.message,
     })
   }
 };
@@ -17,7 +17,7 @@ export const list = async (req, res) => {
     res.json(category);
   } catch (error) {
     res.status(400).json({
-      error: "Cant read category"
+      message: error.message,
     })
   }
 };
@@ -27,10 +27,10 @@ export const remove = async (req, res) => {
     if (category) {
       return res.json(category);
     }
-    res.status(404).json({ error: "Id not found" })
+    res.status(404).json({ message: "Id not found" })
   } catch (error) {
     res.status(400).json({
-      error: "Cant delete category"
+      message: error.message,
     })
   }
 };
@@ -40,10 +40,10 @@ export const update = async (req, res) => {
     if (category) {
       return res.json(category);
     }
-    res.status(404).json({ error: "Id not found" })
+    res.status(404).json({ message: "Id not found" })
   } catch (error) {
     res.status(400).json({
-      error: "Cant update category"
+      message: error.message,
     })
   }
 };
@@ -54,10 +54,10 @@ export const getOne = async (req, res) => {
     if (category) {
       return res.json({ category, products });
     }
-    res.status(404).json({ error: "Id not found" })
+    res.status(404).json({ message: "Id not found" })
   } catch (error) {
     res.status(400).json({
-      error: "Cant find category"
+      message: error.message,
     })
   }
 };
