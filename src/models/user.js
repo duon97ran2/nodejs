@@ -24,7 +24,7 @@ const userSchema = new Schema({
     default: 0
   },
   image: {
-    type: Array,
+    type: Object,
   }
 }, { timestamps: true });
 userSchema.methods = {
