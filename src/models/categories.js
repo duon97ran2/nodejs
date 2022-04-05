@@ -3,6 +3,8 @@ const categorySchema = new Schema({
   name: {
     type: String,
     required: true,
+  }, image: {
+    type: Object,
   }
 }, { timestamps: true });
 
