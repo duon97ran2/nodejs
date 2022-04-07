@@ -8,6 +8,7 @@ import path, { dirname } from "path";
 import categoryRoute from "./routes/categories";
 import authRouter from "./routes/auth";
 import userRouter from "./routes/user";
+import cartRouter from "./routes/cart";
 import dotenv from "dotenv";
 import swaggerUI from "swagger-ui-express";
 import YAML from "yamljs";
@@ -32,8 +33,9 @@ app.use("/api", productRoute);
 app.use("/api", categoryRoute);
 app.use("/api", userRouter);
 app.use("/api", authRouter);
+app.use("/api", cartRouter);
 
-mongoose.connect(process.env.MONGODB_ONLINE).then(() => console.log("connect successfully")).catch(errors => console.log(errors));
+mongoose.connect(process.env.MONGODB_LOCAL).then(() => console.log("connect successfully")).catch(errors => console.log(errors));
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () =>
