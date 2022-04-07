@@ -5,6 +5,7 @@ import cart from "../models/cart";
 export const getCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.params.id }).populate("products.productId").populate("userId").exec();
+    cart.userId.password = null;
     return res.json(cart);
   } catch (error) {
     return res.json({ message: error.message });
