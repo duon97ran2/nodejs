@@ -4,8 +4,7 @@ import cart from "../models/cart";
 
 export const getCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ userId: req.params.id }).populate("products.productId").populate("userId").exec();
-    cart.userId.password = null;
+    const cart = await Cart.findOne({ userId: req.params.id }).populate("products.productId").exec();
     return res.json(cart);
   } catch (error) {
     return res.json({ message: error.message });
@@ -24,7 +23,6 @@ export const addToCart = async (req, res) => {
     }).exec();
     if (existCartUser) {
       let itemIndex = existCartUser.products.findIndex((p) => p.productId == productCart.productId);
-      console.log(itemIndex);
       if (itemIndex > -1) {
         let productItem = existCartUser.products[itemIndex];
         productItem.quantity += productCart.quantity;
@@ -69,3 +67,29 @@ export const addToCart = async (req, res) => {
   }
 }
 
+export const removeCartProduct = async (req, res) => {
+  try {
+    const { actionId } = req.params;
+    const { productId, id } = req.body;
+    const existCart = await Cart.findOne({ _id: id }).exec();
+    let newGrandTotal = 0;
+    if (actionId == "remove") {
+      existCart.products = existCart.products.filter(item => item.productId != productId);
+    }
+    else if (actionId == "clear") {
+      existCart.products = [];
+    };
+    existCart.products.forEach(product => {
+      newGrandTotal += product.totalPrice
+    });
+    const cart = await Cart.findOneAndUpdate({ _id: existCart._id }, {
+      products: existCart.products,
+      grandTotal: newGrandTotal,
+    }, { new: true }).exec();
+    return res.json(cart);
+  } catch (error) {
+    res.json({ message: error.message });
+  }
+
+
+}
