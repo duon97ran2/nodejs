@@ -48,7 +48,7 @@ export const addToCart = async (req, res) => {
       const cart = await Cart.findOneAndUpdate({ _id: existCartUser._id }, {
         products: existCartUser.products,
         grandTotal: newGrandTotal,
-      }, { new: true }).exec();
+      }, { new: true }).populate("products.productId").exec();
       res.status(200).json(cart);
     }
     else {
@@ -64,7 +64,8 @@ export const addToCart = async (req, res) => {
         grandTotal: discount ? +financial(price, discount) * productCart.quantity : price * productCart.quantity,
         userId
       }).save();
-      res.status(200).json(cart);
+      const cartNew = await cart.populate("products.productId");
+      res.status(200).json(cartNew);
     }
 
   } catch (error) {
@@ -90,7 +91,7 @@ export const removeCartProduct = async (req, res) => {
     const cart = await Cart.findOneAndUpdate({ _id: existCart._id }, {
       products: existCart.products,
       grandTotal: newGrandTotal,
-    }, { new: true }).exec();
+    }, { new: true }).populate("products.productId").exec();
     return res.json(cart);
   } catch (error) {
     res.json({ message: error.message });
