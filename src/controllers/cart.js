@@ -18,7 +18,7 @@ export const addToCart = async (req, res) => {
   try {
     const { productCart, userId } = req.body;
     const existCartUser = await Cart.findOne({ userId: userId }).exec();
-    const { price, discount } = await Product.findOne({
+    const { price, discount, stock } = await Product.findOne({
       _id: productCart.productId,
     }).exec();
     if (existCartUser) {
@@ -27,9 +27,14 @@ export const addToCart = async (req, res) => {
         let productItem = existCartUser.products[itemIndex];
         productItem.quantity += productCart.quantity;
         productItem.totalPrice += discount ? +financial(price, discount) * productCart.quantity : price * productCart.quantity;
+        if (productItem.quantity >= stock) {
+          productItem.quantity = stock;
+          productItem.totalPrice = discount ? +financial(price, discount) * stock : price * stock;
+        };
         existCartUser.products[itemIndex] = productItem;
       }
       else {
+        productCart.quantity = productCart.quantity < stock ? productCart.quantity : stock;
         existCartUser.products.push({
           productId: productCart.productId,
           quantity: productCart.quantity,
@@ -47,7 +52,7 @@ export const addToCart = async (req, res) => {
       res.status(200).json(cart);
     }
     else {
-      console.log(price, discount);
+      productCart.quantity = productCart.quantity < stock ? productCart.quantity : stock;
       const cart = await new Cart({
         products: [
           {
