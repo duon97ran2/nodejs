@@ -48,6 +48,7 @@ export const addToCart = async (req, res) => {
       const cart = await Cart.findOneAndUpdate({ _id: existCartUser._id }, {
         products: existCartUser.products,
         grandTotal: newGrandTotal,
+        userId
       }, { new: true }).populate("products.productId").exec();
       res.status(200).json(cart);
     }
@@ -73,24 +74,41 @@ export const addToCart = async (req, res) => {
   }
 }
 
-export const removeCartProduct = async (req, res) => {
+export const updateCartProduct = async (req, res) => {
   try {
+    function financial(x, y) {
+      return (x * (1 - y / 100)).toFixed(2);
+    };
     const { actionId } = req.params;
     const { productId, id } = req.body;
     const existCart = await Cart.findOne({ _id: id }).exec();
+    const { price, discount, stock } = await Product.findOne({
+      _id: productId,
+    }).exec();
+    let itemIndex = existCart.products.findIndex((p) => p.productId == productId);
+    const userId = existCart.userId;
     let newGrandTotal = 0;
     if (actionId == "remove") {
       existCart.products = existCart.products.filter(item => item.productId != productId);
     }
     else if (actionId == "clear") {
       existCart.products = [];
-    };
+    }
+    else if (actionId == 'increase') {
+      existCart.products[itemIndex].quantity++;
+      existCart.products[itemIndex].totalPrice += discount ? (+financial(price, discount)) : (price);
+    }
+    else if (actionId == 'decrease') {
+      existCart.products[itemIndex].quantity--;
+      existCart.products[itemIndex].totalPrice -= discount ? (+financial(price, discount)) : (price);
+    }
     existCart.products.forEach(product => {
       newGrandTotal += product.totalPrice
     });
     const cart = await Cart.findOneAndUpdate({ _id: existCart._id }, {
       products: existCart.products,
       grandTotal: newGrandTotal,
+      userId
     }, { new: true }).populate("products.productId").exec();
     return res.json(cart);
   } catch (error) {
