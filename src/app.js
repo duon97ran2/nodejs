@@ -9,6 +9,7 @@ import categoryRoute from "./routes/categories";
 import authRouter from "./routes/auth";
 import userRouter from "./routes/user";
 import cartRouter from "./routes/cart";
+import orderRouter from "./routes/orders";
 import dotenv from "dotenv";
 import swaggerUI from "swagger-ui-express";
 import YAML from "yamljs";
@@ -34,6 +35,7 @@ app.use("/api", categoryRoute);
 app.use("/api", userRouter);
 app.use("/api", authRouter);
 app.use("/api", cartRouter);
+app.use("/api", orderRouter);
 
 mongoose.connect(process.env.MONGODB_ONLINE).then(() => console.log("connect successfully")).catch(errors => console.log(errors));
 

@@ -82,9 +82,11 @@ export const updateCartProduct = async (req, res) => {
     const { actionId } = req.params;
     const { productId, id } = req.body;
     const existCart = await Cart.findOne({ _id: id }).exec();
-    const { price, discount, stock } = await Product.findOne({
-      _id: productId,
-    }).exec();
+    if (productId) {
+      const { price, discount, stock } = await Product.findOne({
+        _id: productId,
+      }).exec();
+    }
     let itemIndex = existCart.products.findIndex((p) => p.productId == productId);
     const userId = existCart.userId;
     let newGrandTotal = 0;
