@@ -82,11 +82,9 @@ export const updateCartProduct = async (req, res) => {
     const { actionId } = req.params;
     const { productId, id } = req.body;
     const existCart = await Cart.findOne({ _id: id }).exec();
-    if (productId) {
-      const { price, discount, stock } = await Product.findOne({
-        _id: productId,
-      }).exec();
-    }
+    const product = await Product.findOne({
+      _id: productId,
+    }).exec();
     let itemIndex = existCart.products.findIndex((p) => p.productId == productId);
     const userId = existCart.userId;
     let newGrandTotal = 0;
@@ -98,11 +96,11 @@ export const updateCartProduct = async (req, res) => {
     }
     else if (actionId == 'increase') {
       existCart.products[itemIndex].quantity++;
-      existCart.products[itemIndex].totalPrice += discount ? (+financial(price, discount)) : (price);
+      existCart.products[itemIndex].totalPrice += product.discount ? (+financial(product.price, product.discount)) : (product.price);
     }
     else if (actionId == 'decrease') {
       existCart.products[itemIndex].quantity--;
-      existCart.products[itemIndex].totalPrice -= discount ? (+financial(price, discount)) : (price);
+      existCart.products[itemIndex].totalPrice -= product.discount ? (+financial(product.price, product.discount)) : (product.price);
     }
     existCart.products.forEach(product => {
       newGrandTotal += product.totalPrice
