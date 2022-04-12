@@ -32,6 +32,32 @@ export const getOne = async (req, res) => {
     })
   }
 };
+export const fetchProductByCategory = async (req, res) => {
+  try {
+    const { range, order } = req.query;
+    let filters = {};
+    if (range === "under-5") {
+      filters.price = { $lte: 5 };
+    }
+    else if (range === "under-10") {
+      filters.price = { $gt: 5, $lte: 10 };
+    }
+    else if (range === "under-15") {
+      filters.price = { $gt: 10, $lte: 15 };
+    }
+    else if (range === "under-20") {
+      filters.price = { $gt: 15, $lte: 20 };
+    }
+
+    const products = await Product.find({ category: req.params.categoryId, ...filters }).sort({ createdAt: order }).exec();
+
+    res.json(products);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    })
+  }
+};
 export const remove = async (req, res) => {
   try {
     const product = await Product.findOneAndDelete({ _id: req.params.id }).exec();
