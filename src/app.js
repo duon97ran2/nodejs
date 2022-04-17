@@ -22,7 +22,7 @@ app.use(morgan('tiny'));
 app.use(express.json({ limit: "50mb" }));
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'https://redex-typescript-assignment-9moxbooju-duon97ran2.vercel.app/',
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200
 };
