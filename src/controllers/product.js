@@ -48,8 +48,9 @@ export const fetchProductByCategory = async (req, res) => {
     else if (range === "under-20") {
       filters.price = { $gt: 15, $lte: 20 };
     }
-
-    const products = await Product.find({ category: req.params.categoryId, ...filters }).sort({ createdAt: order }).exec();
+    const condition = req.params.id ? { category: req.params.categoryId } : {}
+    console.log(condition)
+    const products = await Product.find({ condition, ...filters }).sort({ createdAt: order }).exec();
 
     res.json(products);
   } catch (error) {
