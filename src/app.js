@@ -21,15 +21,9 @@ const swaggerJSDOcs = YAML.load(__dirname + "/configs/api.yaml");
 app.use(morgan('tiny'));
 app.use(express.json({ limit: "50mb" }));
 
-var whitelist = ['http://localhost:3000', 'https://redex-typescript-assignment.vercel.app/'];
+
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
+  origin: "*",
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200
 };
